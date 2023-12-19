@@ -2,6 +2,7 @@
 
 #include "Token.hpp"
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 class Scanner {
@@ -20,6 +21,7 @@ private:
   std::string::const_iterator start;
   std::vector<Token> tokens;
   int line;
+
   void scanToken();
   void addToken(TokenType type);
   void addToken(TokenType type,
@@ -33,6 +35,8 @@ private:
   char peek() const;
   char peekNext() const;
   bool isAtEnd() const;
+
+  static std::unordered_map<std::string, TokenType> keywordMap;
 
   static bool isNumeric(char c);
   static bool isAlpha(char c);

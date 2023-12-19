@@ -2,6 +2,7 @@
 #include "Ceplox.hpp"
 #include "TokenType.hpp"
 #include <iostream>
+#include <unordered_map>
 #include <vector>
 
 Scanner::Scanner(std::string source) {
@@ -157,6 +158,11 @@ void Scanner::addNumberToken() {
 void Scanner::addIdentifierToken() {
   while (isAlphaNumeric(peek()))
     consume();
+  auto lexeme = std::string(start, current);
+  if (keywordMap.find(lexeme) != keywordMap.end()) {
+    addToken(keywordMap[lexeme]);
+    return;
+  }
   addToken(TokenType::IDENTIFIER);
 }
 
@@ -210,3 +216,24 @@ bool Scanner::isAlpha(char c) {
 }
 
 bool Scanner::isAlphaNumeric(char c) { return isAlpha(c) || isNumeric(c); }
+
+std::unordered_map<std::string, TokenType> Scanner::keywordMap = [] {
+  std::unordered_map<std::string, TokenType> keywordMap;
+  keywordMap["and"] = TokenType::AND;
+  keywordMap["class"] = TokenType::CLASS;
+  keywordMap["else"] = TokenType::ELSE;
+  keywordMap["false"] = TokenType::FALSE;
+  keywordMap["for"] = TokenType::FOR;
+  keywordMap["fun"] = TokenType::FUN;
+  keywordMap["if"] = TokenType::IF;
+  keywordMap["nil"] = TokenType::NIL;
+  keywordMap["or"] = TokenType::OR;
+  keywordMap["print"] = TokenType::PRINT;
+  keywordMap["return"] = TokenType::RETURN;
+  keywordMap["super"] = TokenType::SUPER;
+  keywordMap["this"] = TokenType::THIS;
+  keywordMap["true"] = TokenType::TRUE;
+  keywordMap["var"] = TokenType::VAR;
+  keywordMap["while"] = TokenType::WHILE;
+  return keywordMap;
+}();
