@@ -88,8 +88,9 @@ void Scanner::scanToken() {
     break;
   case '/':
     if (matchAndConsume('/')) {
-      while ((peek() != '\n') && !isAtEnd())
-        consume();
+      consumeSingleLineComment();
+    } else if (matchAndConsume('*')) {
+      consumeMultiLineComment();
     } else {
       addToken(TokenType::SLASH);
     }
@@ -189,6 +190,28 @@ bool Scanner::matchAndConsume(char expectedChar) {
     return true;
   }
   return false;
+}
+
+void Scanner::consumeSingleLineComment() {
+  while (!isAtEnd() && peek() != '\n') {
+    consume();
+  }
+}
+
+void Scanner::consumeMultiLineComment() {
+  auto nestedCommentCount = 1;
+  while (!isAtEnd()) {
+    if (matchAndConsume('*') && matchAndConsume('/')) {
+      nestedCommentCount--;
+    }
+    if (matchAndConsume('/') && matchAndConsume('*')) {
+      nestedCommentCount++;
+    }
+    if (nestedCommentCount == 0) {
+      break;
+    }
+    consume();
+  }
 }
 
 char Scanner::peek() const {

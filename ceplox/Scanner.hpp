@@ -31,6 +31,8 @@ private:
   void addIdentifierToken();
   char consume();
   bool matchAndConsume(char c);
+  void consumeSingleLineComment();
+  void consumeMultiLineComment();
 
   char peek() const;
   char peekNext() const;
