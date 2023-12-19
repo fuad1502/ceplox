@@ -191,9 +191,19 @@ bool Scanner::matchAndConsume(char expectedChar) {
   return false;
 }
 
-char Scanner::peek() const { return *current; }
+char Scanner::peek() const {
+  if (current == source.end()) {
+    return '\0';
+  }
+  return *current;
+}
 
-char Scanner::peekNext() const { return *std::next(current); }
+char Scanner::peekNext() const {
+  if (std::next(current) == source.end()) {
+    return '\0';
+  }
+  return *std::next(current);
+}
 
 bool Scanner::isAtEnd() const {
   return (current == source.end() || peek() == '\0');
