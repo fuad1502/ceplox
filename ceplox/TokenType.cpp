@@ -44,7 +44,7 @@ std::ostream &operator<<(std::ostream &out, const TokenType tokenType) {
     INSERT_ELEMENT(TokenType::TRUE);
     INSERT_ELEMENT(TokenType::VAR);
     INSERT_ELEMENT(TokenType::WHILE);
-    INSERT_ELEMENT(TokenType::ENDOFFILE);
+    INSERT_ELEMENT(TokenType::END_OF_FILE);
 #undef INSERT_ELEMENT
     return result;
   }();

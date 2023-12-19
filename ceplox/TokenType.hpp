@@ -48,7 +48,7 @@ enum class TokenType {
   VAR,
   WHILE,
 
-  ENDOFFILE,
+  END_OF_FILE,
 };
 
 std::ostream &operator<<(std::ostream &out, const TokenType tokenType);
