@@ -16,4 +16,25 @@ public:
 
 private:
   std::string source;
+  std::string::const_iterator current;
+  std::string::const_iterator start;
+  std::vector<Token> tokens;
+  int line;
+  void scanToken();
+  void addToken(TokenType type);
+  void addToken(TokenType type,
+                std::variant<bool, double, std::string> literal);
+  void addStringToken();
+  void addNumberToken();
+  void addIdentifierToken();
+  char consume();
+  bool matchAndConsume(char c);
+
+  char peek() const;
+  char peekNext() const;
+  bool isAtEnd() const;
+
+  static bool isNumeric(char c);
+  static bool isAlpha(char c);
+  static bool isAlphaNumeric(char c);
 };
