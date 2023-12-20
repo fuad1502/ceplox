@@ -6,11 +6,17 @@ project(ceplox)
 
 add_subdirectory(code_generator)
 
+add_custom_command(
+  OUTPUT Expr.cpp Expr.hpp ExprVisitor.hpp
+  COMMAND ExprGenerator ARGS 
+        ${CMAKE_SOURCE_DIR}/code_generator/grammar.txt 
+        ${CMAKE_BINARY_DIR}/
+  DEPENDS ExprGenerator
+)
+
 add_executable(ceplox ceplox/main.cpp)
 
-add_dependencies(ceplox ExprGeneratorTarget)
-
-target_sources(ceplox PRIVATE ceplox/Ceplox.cpp ceplox/Scanner.cpp ceplox/Token.cpp ceplox/TokenType.cpp)
+target_sources(ceplox PRIVATE ceplox/Ceplox.cpp ceplox/Scanner.cpp ceplox/Token.cpp ceplox/TokenType.cpp Expr.cpp)
 
 target_include_directories(ceplox PRIVATE ceplox)
-target_include_directories(ceplox PRIVATE ${CMAKE_BINARY_DIR}/code_generator)
+target_include_directories(ceplox PRIVATE ${CMAKE_BINARY_DIR})
