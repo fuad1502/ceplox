@@ -1,0 +1,4 @@
+Binary: std::unique_ptr<Expr> left, Token op, std::unique_ptr<Expr> right
+Grouping: std::unique_ptr<Expr> expression
+Literal: LiteralValue value
+Unary: Token op, std::unique_ptr<Expr> right
