@@ -24,8 +24,7 @@ private:
 
   void scanToken();
   void addToken(TokenType type);
-  void addToken(TokenType type,
-                std::variant<bool, double, std::string> literal);
+  void addToken(TokenType type, std::optional<LiteralValue> literal);
   void addStringToken();
   void addNumberToken();
   void addIdentifierToken();

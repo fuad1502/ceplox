@@ -1,7 +1,7 @@
 #include "Scanner.hpp"
 #include "Ceplox.hpp"
+#include "Token.hpp"
 #include "TokenType.hpp"
-#include <iostream>
 #include <unordered_map>
 #include <vector>
 
@@ -167,10 +167,9 @@ void Scanner::addIdentifierToken() {
   addToken(TokenType::IDENTIFIER);
 }
 
-void Scanner::addToken(TokenType type) { addToken(type, ""); }
+void Scanner::addToken(TokenType type) { addToken(type, std::nullopt); }
 
-void Scanner::addToken(TokenType type,
-                       std::variant<bool, double, std::string> literal) {
+void Scanner::addToken(TokenType type, std::optional<LiteralValue> literal) {
   auto lexeme = std::string(start, current);
   tokens.push_back(Token(lexeme, type, literal, line));
 }
