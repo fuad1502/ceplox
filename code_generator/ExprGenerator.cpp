@@ -48,6 +48,9 @@ void ExprGenerator::generate(std::vector<std::string> grammar,
              << std::endl;
   headerFile << "};" << std::endl;
   headerFile << std::endl;
+  // pExpr alias
+  headerFile << "using pExpr = std::unique_ptr<Expr>;" << std::endl;
+  headerFile << std::endl;
   // Subclasses
   for (auto rule : grammar) {
     auto className = rule.substr(0, rule.find(":"));
