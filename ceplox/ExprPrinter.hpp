@@ -3,7 +3,7 @@
 
 class ExprPrinter : public ExprVisitor {
 public:
-  void print(const Expr &expr);
+  void print(const pExpr &expr);
   std::any visitBinary(const BinaryExpr &expr) override;
   std::any visitGrouping(const GroupingExpr &expr) override;
   std::any visitLiteral(const LiteralExpr &expr) override;

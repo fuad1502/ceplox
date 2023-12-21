@@ -1,8 +1,8 @@
 #include "ExprPrinter.hpp"
 #include <iostream>
 
-void ExprPrinter::print(const Expr &expr) {
-  expr.accept(*this);
+void ExprPrinter::print(const pExpr &expr) {
+  expr->accept(*this);
   std::cout << std::endl;
 }
 
