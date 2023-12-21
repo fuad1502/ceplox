@@ -131,6 +131,7 @@ std::optional<pExpr> Parser::primary() {
         std::unique_ptr<Expr>(new LiteralExpr(token.getLiteral().value_or("")));
     return expr;
   } else if (match(std::vector{TokenType::LEFT_PAREN})) {
+    consume();
     auto opt = expression();
     if (!opt)
       return std::nullopt;
@@ -139,6 +140,7 @@ std::optional<pExpr> Parser::primary() {
       Ceplox::error(peek().getLine(), "Expected right parantheses");
       return std::nullopt;
     }
+    consume();
     auto expr =
         std::unique_ptr<Expr>(new GroupingExpr(std::move(containedExpr)));
     return expr;
