@@ -16,7 +16,7 @@ add_custom_command(
 
 add_executable(ceplox ceplox/main.cpp)
 
-target_sources(ceplox PRIVATE ceplox/Ceplox.cpp ceplox/Scanner.cpp ceplox/Token.cpp ceplox/TokenType.cpp Expr.cpp)
+target_sources(ceplox PRIVATE ceplox/Ceplox.cpp ceplox/Scanner.cpp ceplox/Token.cpp ceplox/TokenType.cpp Expr.cpp ceplox/ExprPrinter.cpp)
 
 target_include_directories(ceplox PRIVATE ceplox)
 target_include_directories(ceplox PRIVATE ${CMAKE_BINARY_DIR})
