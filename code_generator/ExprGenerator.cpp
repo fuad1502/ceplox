@@ -44,7 +44,7 @@ void ExprGenerator::generate(std::vector<std::string> grammar,
   // Base Expr class
   headerFile << "class Expr {" << std::endl;
   headerFile << "public:" << std::endl;
-  headerFile << "  virtual std::any accept(ExprVisitor &visitor) = 0;"
+  headerFile << "  virtual std::any accept(ExprVisitor &visitor) const = 0;"
              << std::endl;
   headerFile << "};" << std::endl;
   headerFile << std::endl;
@@ -76,7 +76,7 @@ void ExprGenerator::generate(std::vector<std::string> grammar,
     auto className = rule.substr(0, rule.find(":"));
     boost::trim(className);
     sourceFile << "std::any " << name(className)
-               << "Expr::accept(ExprVisitor &visitor) {" << std::endl;
+               << "Expr::accept(ExprVisitor &visitor) const {" << std::endl;
     sourceFile << "  return visitor.visit" << className << "(*this);"
                << std::endl;
     sourceFile << "}" << std::endl;
@@ -109,7 +109,7 @@ void ExprGenerator::generateClass(std::string className,
     outputFile << "  " << field << ";" << std::endl;
   }
   // Visitor accept method
-  outputFile << "  std::any accept(ExprVisitor &visitor) override;"
+  outputFile << "  std::any accept(ExprVisitor &visitor) const override;"
              << std::endl;
   outputFile << "};" << std::endl;
 }
