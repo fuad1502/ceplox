@@ -1,4 +1,6 @@
 #include "Ceplox.hpp"
+#include "ExprPrinter.hpp"
+#include "Parser.hpp"
 #include "Scanner.hpp"
 #include <fstream>
 #include <iostream>
@@ -30,8 +32,14 @@ void Ceplox::runPrompt() {
 void Ceplox::run(std::string source) {
   Scanner scanner(source);
   auto tokens = scanner.scanTokens();
-  for (auto &token : tokens) {
-    std::cout << token << std::endl;
+  Parser parser(std::move(tokens));
+  auto ExprOpt = parser.parse();
+  if (ExprOpt.has_value()) {
+    auto expr = std::move(ExprOpt.value());
+    ExprPrinter printer;
+    printer.print(expr);
+  } else {
+    hadError = true;
   }
 }
 
