@@ -11,7 +11,7 @@ add_custom_command(
   COMMAND ExprGenerator ARGS 
         ${CMAKE_SOURCE_DIR}/code_generator/grammar.txt 
         ${CMAKE_BINARY_DIR}/
-  DEPENDS ExprGenerator
+  DEPENDS ExprGenerator code_generator/grammar.txt
 )
 
 add_executable(ceplox ceplox/main.cpp)

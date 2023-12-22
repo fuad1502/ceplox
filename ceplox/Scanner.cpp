@@ -57,6 +57,12 @@ void Scanner::scanToken() {
   case '*':
     addToken(TokenType::STAR);
     break;
+  case '?':
+    addToken(TokenType::QUESTION);
+    break;
+  case ':':
+    addToken(TokenType::COLON);
+    break;
   // Handle one or two character lexemes
   case '!':
     if (matchAndConsume('=')) {

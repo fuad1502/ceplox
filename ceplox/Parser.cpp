@@ -11,7 +11,35 @@ Parser::Parser(std::vector<Token> &&tokens) : tokens(std::move(tokens)) {
 
 std::optional<pExpr> Parser::parse() { return expression(); }
 
-std::optional<pExpr> Parser::expression() { return equality(); }
+std::optional<pExpr> Parser::expression() { return ternary(); }
+
+std::optional<pExpr> Parser::ternary() {
+  auto opt = equality();
+  if (!opt)
+    return std::nullopt;
+  auto expr = std::move(opt.value());
+
+  if (match(std::vector{TokenType::QUESTION})) {
+    consume();
+    auto opt = expression();
+    if (!opt)
+      return std::nullopt;
+    auto thenExpr = std::move(opt.value());
+    if (!match(std::vector{TokenType::COLON})) {
+      Ceplox::error(peek().getLine(), "Expected colon");
+      return std::nullopt;
+    }
+    consume();
+    auto opt2 = expression();
+    if (!opt2)
+      return std::nullopt;
+    auto elseExpr = std::move(opt2.value());
+    expr = std::unique_ptr<Expr>(new TernaryExpr(
+        std::move(expr), std::move(thenExpr), std::move(elseExpr)));
+  }
+
+  return expr;
+}
 
 // equality → comparison ( ( "!=" | "==" ) comparison )* ;
 std::optional<pExpr> Parser::equality() {

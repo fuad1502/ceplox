@@ -33,3 +33,14 @@ std::any ExprPrinter::visitUnary(const UnaryExpr &expression) {
   std::cout << ")";
   return {};
 }
+
+std::any ExprPrinter::visitTernary(const TernaryExpr &expression) {
+  std::cout << "(? ";
+  expression.condition->accept(*this);
+  std::cout << " ";
+  expression.thenBranch->accept(*this);
+  std::cout << " ";
+  expression.elseBranch->accept(*this);
+  std::cout << ")";
+  return {};
+}

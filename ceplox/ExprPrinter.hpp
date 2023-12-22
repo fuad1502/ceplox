@@ -8,6 +8,7 @@ public:
   std::any visitGrouping(const GroupingExpr &expr) override;
   std::any visitLiteral(const LiteralExpr &expr) override;
   std::any visitUnary(const UnaryExpr &expr) override;
+  std::any visitTernary(const TernaryExpr &expr) override;
 
 private:
 };
