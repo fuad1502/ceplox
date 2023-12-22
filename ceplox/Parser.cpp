@@ -11,7 +11,26 @@ Parser::Parser(std::vector<Token> &&tokens) : tokens(std::move(tokens)) {
 
 std::optional<pExpr> Parser::parse() { return expression(); }
 
-std::optional<pExpr> Parser::expression() { return ternary(); }
+std::optional<pExpr> Parser::expression() { return comma(); }
+
+std::optional<pExpr> Parser::comma() {
+  auto opt = ternary();
+  if (!opt)
+    return std::nullopt;
+  auto expr = std::move(opt.value());
+
+  while (match(std::vector{TokenType::COMMA})) {
+    auto op = consume();
+    auto opt = ternary();
+    if (!opt)
+      return std::nullopt;
+    auto rightExpr = std::move(opt.value());
+    expr = std::unique_ptr<Expr>(
+        new BinaryExpr(std::move(expr), op, std::move(rightExpr)));
+  }
+
+  return expr;
+}
 
 std::optional<pExpr> Parser::ternary() {
   auto opt = equality();

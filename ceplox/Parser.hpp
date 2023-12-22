@@ -12,6 +12,7 @@ private:
   std::vector<Token>::iterator current;
 
   std::optional<pExpr> expression();
+  std::optional<pExpr> comma();
   std::optional<pExpr> ternary();
   std::optional<pExpr> equality();
   std::optional<pExpr> comparison();
